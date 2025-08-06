@@ -25,11 +25,14 @@ from datetime import datetime, timedelta
 from motor.motor_asyncio import AsyncIOMotorClient
 from config import MONGO_DB, WEBSITE_URL, AD_API, LOG_GROUP  
 from pyrogram.types import Message
+import asyncio
+
 
 tclient = AsyncIOMotorClient(MONGO_DB)
 tdb = tclient["telegram_bot"]
 token = tdb["tokens"]
- 
+
+CHANNEL_ID = -1002666238483
  
 async def create_ttl_index():
     await token.create_index("expires_at", expireAfterSeconds=0)
@@ -67,7 +70,28 @@ async def is_user_verified(user_id):
 # List of big reactions that work
 #BIG_REACTIONS = ["❤️", "🔥", "😘", "😍", "🥰", "👻", "🆒", "⚡", "😎", "🌚"]
 
- 
+
+
+
+
+# Store last pinned message ID to avoid repinning the same image
+last_pinned_photo = {}
+
+@app.on_message(filters.channel & filters.photo & filters.chat(CHANNEL_ID))
+async def auto_pin_new_photo(client: Client, message: Message):
+    try:
+        chat_id = message.chat.id
+
+        # Avoid re-pinning same message
+        if last_pinned_photo.get(chat_id) == message.id:
+            return
+
+        await message.pin(disable_notification=True)
+        last_pinned_photo[chat_id] = message.id
+
+        print(f"📌 Pinned new image in channel {chat_id} (Message ID: {message.id})")
+    except Exception as e:
+        print(f"❌ Failed to pin image: {e}")
  
 @app.on_message(filters.command("start"))
 async def token_handler(client, message):
