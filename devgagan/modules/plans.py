@@ -21,6 +21,55 @@ from config import OWNER_ID
 from devgagan.core.func import get_seconds
 from devgagan.core.mongo import plans_db  
 from pyrogram import filters 
+from telethon import events, Button
+
+# Add to your command handlers
+@bot.on(events.NewMessage(pattern='/plans'))
+async def show_plans(event):
+    buttons = [
+        [
+            Button.inline("🔰 Basic Plan", b'basic'),
+            Button.inline("💎 Premium Plan", b'premium'),
+            Button.inline("👑 Pro Plan", b'pro'),
+        ]
+    ]
+    await event.respond("💸 **Choose a Subscription Plan:**", buttons=buttons)
+
+
+@bot.on(events.CallbackQuery)
+async def plan_details(event):
+    data = event.data.decode()
+
+    if data == 'basic':
+        await event.edit(
+            "🔰 **Basic Plan** (Free)\n\n"
+            "• Rename Files\n"
+            "• Set Custom Caption\n"
+            "• Basic Upload Options\n"
+            "• Free Forever 🔥"
+        )
+
+    elif data == 'premium':
+        await event.edit(
+            "💎 **Premium Plan** (₹99/month)\n\n"
+            "• All Basic Features\n"
+            "• Faster Upload Speed ⚡\n"
+            "• Replace Words\n"
+            "• Add Watermarks\n"
+            "• Premium Support 💬"
+        )
+
+    elif data == 'pro':
+        await event.edit(
+            "👑 **Pro Plan** (₹199/month)\n\n"
+            "• All Premium Features\n"
+            "• Unlimited Files Daily 📂\n"
+            "• Cloud Integration ☁️\n"
+            "• Private Access Tools 🔒\n"
+            "• Direct Support from Dev 👨‍💻"
+        )
+
+
 
 
 
