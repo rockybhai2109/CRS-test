@@ -189,53 +189,7 @@ async def terms(client, message):
     await message.reply_text(terms_text, reply_markup=buttons)
  
  
-@app.on_message(filters.command("plans") & filters.private)
-async def plan(client, message):
-    plan_text = (
-        "💎 **Upgrade to Premium** 💎\n\n"
 
-        "🚀 **Premium Features**\n"
-        "✅ No verification every 2 hours ⏳\n"
-        "✅ Upload in bulk (up to 2000 files) 📂\n"
-        "✅ Instantly skip the 300-second wait ⏱️\n"
-        "✅ Extract unlimited videos from channels, groups, and bots 🎥\n\n"
-
-        "🔹 **Free Plan**\n"
-        "⏳ Validity: Unlimited\n"
-        "💰 Price: ₹0 / $0.00 USDT\n"
-        "❌ Limited features\n"
-        "❌ Limited downloads\n\n"
-
-        "🔟 **7-Day Plan**\n"
-        "💰 Price: ₹30 / $0.50 USDT\n"
-        "⏳ Validity: 7 days\n"
-        "🎥 Extract unlimited videos\n\n"
-
-        "🌀 **15-Day Plan**\n"
-        "💰 Price: ₹60 / $0.90 USDT\n"
-        "⏳ Validity: 15 days\n"
-        "🎥 Extract unlimited videos\n\n"
-
-        "🏆 **Monthly Plan**\n"
-        "💰 Price: ₹90 / $1.20 USDT\n"
-        "⏳ Validity: 30 days\n"
-        "🎥 Extract unlimited videos\n"
-        "⚡ High Speed 🚀\n"
-        "═══════════════════"
-        "💰 Better Plans Then others 💯\n\n"
-        "📲 To Upgrade: Contact @CHOSEN_ONEx_bot\n\n"
-        "💳 Payment via UPI, Amazon Gift Card or USDT\n"
-        
-    )
-   
-     
-    buttons = InlineKeyboardMarkup(
-        [
-            [InlineKeyboardButton("📜 See Terms", callback_data="see_terms")],
-            [InlineKeyboardButton("💬 Contact Now", url="https://t.me/CHOSEN_ONEx_bot")],
-        ]
-    )
-    await message.reply_text(plan_text, reply_markup=buttons)
  
  
 @app.on_callback_query(filters.regex("see_plan"))
