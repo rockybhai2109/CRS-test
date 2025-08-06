@@ -24,24 +24,27 @@ from pyrogram import filters
 from telethon import events, Button
 
 # Add to your command handlers
-@bot.on(events.NewMessage(pattern='/plans'))
-async def show_plans(event):
+from pyrogram import Client, filters
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+
+@app.on_message(filters.command("plans"))
+async def show_plans(client, message):
     buttons = [
         [
-            Button.inline("🔰 Basic Plan", b'basic'),
-            Button.inline("💎 Premium Plan", b'premium'),
-            Button.inline("👑 Pro Plan", b'pro'),
+            InlineKeyboardButton("🔰 Basic Plan", callback_data="basic"),
+            InlineKeyboardButton("💎 Premium Plan", callback_data="premium"),
+            InlineKeyboardButton("👑 Pro Plan", callback_data="pro"),
         ]
     ]
-    await event.respond("💸 **Choose a Subscription Plan:**", buttons=buttons)
+    await message.reply_text("💸 **Choose a Subscription Plan:**", reply_markup=InlineKeyboardMarkup(buttons))
 
 
-@bot.on(events.CallbackQuery)
-async def plan_details(event):
-    data = event.data.decode()
+@app.on_callback_query()
+async def plan_details(client, callback_query):
+    data = callback_query.data
 
-    if data == 'basic':
-        await event.edit(
+    if data == "basic":
+        await callback_query.message.edit_text(
             "🔰 **Basic Plan** (Free)\n\n"
             "• Rename Files\n"
             "• Set Custom Caption\n"
@@ -49,8 +52,8 @@ async def plan_details(event):
             "• Free Forever 🔥"
         )
 
-    elif data == 'premium':
-        await event.edit(
+    elif data == "premium":
+        await callback_query.message.edit_text(
             "💎 **Premium Plan** (₹99/month)\n\n"
             "• All Basic Features\n"
             "• Faster Upload Speed ⚡\n"
@@ -59,8 +62,8 @@ async def plan_details(event):
             "• Premium Support 💬"
         )
 
-    elif data == 'pro':
-        await event.edit(
+    elif data == "pro":
+        await callback_query.message.edit_text(
             "👑 **Pro Plan** (₹199/month)\n\n"
             "• All Premium Features\n"
             "• Unlimited Files Daily 📂\n"
@@ -68,9 +71,6 @@ async def plan_details(event):
             "• Private Access Tools 🔒\n"
             "• Direct Support from Dev 👨‍💻"
         )
-
-
-
 
 
 @app.on_message(filters.command("rem") & filters.user(OWNER_ID))
