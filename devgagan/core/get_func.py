@@ -750,18 +750,22 @@ def format_caption(original_caption, sender, custom_caption):
     # ✅ Replace "Extracted By" with custom credit    
     original_caption = re.sub(
         r'(📩)?\s*(Extracted[\s_]*By)\s*[:➤>–\-]*\s*.*',
-        r'𖣐 𝗫𝘁𝗿𝗮𝗰𝘁𝗲𝗱 𝗕𝘆: 𝗖𝗛𝗢𝗦𝗘𝗡 𝗢𝗡𝗘 ⚝',
+        r'Xᴛʀᴀᴄᴛᴇᴅ ʙʏ:Sᴛꪮʟᴇɴ Hᴀᴘᴘɪɴᴇss',
         original_caption,
         flags=re.IGNORECASE
     )
-
-
+    original_caption = re.sub(
+        r'(📥)?\s*[ᴇe][xхх][ᴛt][ʀr][ᴀa][ᴄc][ᴛt][ᴇe][ᴅd]\s*[ʙb][ʏy]\s*[:➤>–\-]*\s*.*',
+        r'Xᴛʀᴀᴄᴛᴇᴅ ʙʏ:Sᴛꪮʟᴇɴ Hᴀᴘᴘɪɴᴇss',
+        original_caption,
+        flags=re.IGNORECASE
+    )
 
     # ✅ Replace "Downloaded By" with bot handle
 
     original_caption = re.sub(
         r'(?:📥)?\s*(Downloaded[\s_]*By)\s*[:➤>–\-]*\s*.*',
-        r'𖣐 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗱 𝗕𝘆: 𝗖𝗛𝗢𝗦𝗘𝗡 𝗢𝗡𝗘 ⚝',
+        r'Xᴛʀᴀᴄᴛᴇᴅ ʙʏ:Sᴛꪮʟᴇɴ Hᴀᴘᴘɪɴᴇss',
         original_caption,
         flags=re.IGNORECASE
     )
@@ -769,10 +773,17 @@ def format_caption(original_caption, sender, custom_caption):
     
     original_caption = re.sub(
         r'(⏫)?\s*<u>?\s*(Uploaded[\s_]*By)\s*[➤:>–\-]*\s*[^<\n]+</u>?',
-        r'⏫ Uploaded By ➤ 𝗖𝗛𝗢𝗦𝗘𝗡 𝗢𝗡𝗘 ⚝',
+        r'Uploaded By ➤ Sᴛꪮʟᴇɴ Hᴀᴘᴘɪɴᴇss',
         original_caption,
         flags=re.IGNORECASE
         )
+    original_caption = re.sub(
+        r'^.*[ＥE][ＲR]{2}.*[⁹9]{2,}.*[⁺+]?.*$',
+        r'Xᴛʀᴀᴄᴛᴇᴅ ʙʏ:Sᴛꪮʟᴇɴ Hᴀᴘᴘɪɴᴇss',
+        original_caption,
+        flags=re.IGNORECASE | re.MULTILINE
+    )
+
 
     # 🔁 Delete unwanted words
     for word in delete_words:
@@ -786,8 +797,8 @@ def format_caption(original_caption, sender, custom_caption):
     original_caption = original_caption.replace("[", "〔").replace("]", "〕")
     original_caption = original_caption.replace("(", "「").replace(")", "」")
     original_caption = original_caption.replace("📕", "📙")
-    original_caption = original_caption.replace("📽️", "🚜")
-    original_caption = original_caption.replace("📌", "💎")
+    original_caption = original_caption.replace("📚", "⭐")
+    original_caption = original_caption.replace("📌", "💠")
 
     # ✅ Append custom caption if exists
     if custom_caption:
